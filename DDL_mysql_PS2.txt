@@ -1,0 +1,27 @@
+1. Create Tables with Referential Integrity:
+CREATE TABLE Customer (CustID INT PRIMARY KEY,Name VARCHAR(50),Cust_Address VARCHAR(100),Phone_no VARCHAR(15),Email_ID VARCHAR(50),Age INT);
+
+CREATE TABLE Branch (Branch_ID INT PRIMARY KEY,Branch_Name VARCHAR(50),Address VARCHAR(100));
+
+CREATE TABLE Account (Account_no INT PRIMARY KEY,Branch_ID INT,CustID INT,open_date DATE,Account_type VARCHAR(20),Balance DECIMAL(10, 2),FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID),FOREIGN KEY (CustID) REFERENCES Customer(CustID));
+
+3. Create a View for Savings Account Customers Opened on 16/8/2018: 
+CREATE VIEW Saving_Account AS SELECT Customer.CustID, Customer.Name, Customer.Cust_Address, Customer.Phone_no, Customer.Email_ID, Customer.Age, Account.open_date FROM Customer JOIN Account ON Customer.CustID = Account.CustID WHERE Account.Account_type = 'Saving' AND Account.open_date = '2018-08-16';
+
+4. Update the View with Cust_Address as Pune for CustID = 103:
+UPDATE Customer SET Cust_Address = 'Pune' WHERE CustID = 103;
+
+5. Create a View for Loan Account Customers Opened on 16/2/2018:
+CREATE VIEW Loan_Account AS SELECT Customer.CustID, Customer.Name, Customer.Cust_Address, Customer.Phone_no, Customer.Email_ID, Customer.Age, Account.open_date FROM Customer JOIN Account ON Customer.CustID = Account.CustID WHERE Account.Account_type = 'Loan' AND Account.open_date = '2018-02-16';
+
+6. Create an Index on the Primary Key Column of the Customer Table:
+CREATE INDEX idx_CustID ON Customer(CustID);
+
+7. Create an Index on the Primary Key Column of the Branch Table:
+CREATE INDEX idx_BranchID ON Branch(Branch_ID);
+
+8. Create a Sequence on Customer Table:
+ALTER TABLE Customer MODIFY COLUMN CustID INT AUTO_INCREMENT;
+
+9. Create a Synonym ‘Cust_info’ for Branch Table:
+CREATE VIEW Cust_info AS SELECT * FROM Branch;

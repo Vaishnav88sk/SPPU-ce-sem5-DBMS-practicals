@@ -1,0 +1,29 @@
+db.createCollection("Book")
+
+db.Book.insertMany([
+    { Title: "Book A", Author_name: "Author 1", Borrowed_status: true, Price: 350 },
+    { Title: "Book B", Author_name: "Author 1", Borrowed_status: false, Price: 250 },
+    { Title: "Book C", Author_name: "Author 2", Borrowed_status: true, Price: 400 },
+    { Title: "Book D", Author_name: "Author 2", Borrowed_status: false, Price: 150 },
+    { Title: "Book E", Author_name: "Author 3", Borrowed_status: true, Price: 320 },
+    { Title: "Book F", Author_name: "Author 3", Borrowed_status: false, Price: 280 },
+    { Title: "Book G", Author_name: "Author 1", Borrowed_status: true, Price: 500 }
+]);
+
+1. Display Author-wise List of Books:
+var mapFunction1 = function() {emit(this.Author_name, this.Title);};
+var reduceFunction1 = function(key, values) {return values;};
+db.Book.mapReduce(mapFunction1, reduceFunction1,{ out: "Author_Wise_Books" });
+db.Author_Wise_Books.find();
+
+2. Display Author-wise List of Books with Borrowed_status as True:
+var mapFunction2 = function() {if (this.Borrowed_status === true) {emit(this.Author_name, this.Title);}};
+var reduceFunction2 = function(key, values) {return values;};
+db.Book.mapReduce(mapFunction2,reduceFunction2,{ out: "Author_Wise_Borrowed_Books" });
+db.Author_Wise_Borrowed_Books.find();
+
+3. Display Author-wise List of Books with Price Greater Than 300:
+var mapFunction3 = function() {if (this.Price > 300) {emit(this.Author_name, this.Title);}};
+var reduceFunction3 = function(key, values) {return values;};
+db.Book.mapReduce(mapFunction3,reduceFunction3,{ out: "Author_Wise_Books_Price_GT_300" });
+db.Author_Wise_Books_Price_GT_300.find();

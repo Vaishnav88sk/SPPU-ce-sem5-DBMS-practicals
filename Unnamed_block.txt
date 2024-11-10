@@ -1,0 +1,44 @@
+DECLARE
+    v_emp_id        Employee.emp_id%TYPE;
+    v_dept_id       Employee.dept_id%TYPE;
+    v_emp_name      Employee.emp_name%TYPE;
+    v_doj           Employee.DoJ%TYPE;
+    v_salary        Employee.salary%TYPE;
+    v_new_salary    Salary_Increment.new_salary%TYPE;
+    v_experience    NUMBER;
+
+    e_invalid_emp EXCEPTION;
+
+BEGIN
+    v_emp_id := 115;  
+
+    SELECT emp_id, dept_id, emp_name, DoJ, salary
+    INTO v_emp_id, v_dept_id, v_emp_name, v_doj, v_salary
+    FROM Employee
+    WHERE emp_id = v_emp_id;
+
+    v_experience := FLOOR(MONTHS_BETWEEN(SYSDATE, v_doj) / 12);
+
+    IF v_experience > 10 THEN
+        v_new_salary := v_salary * 1.20;
+    ELSIF v_experience > 5 THEN
+        v_new_salary := v_salary * 1.10;
+    ELSE
+        v_new_salary := v_salary * 1.05;
+    END IF;
+
+    INSERT INTO Salary_Increment (emp_id, new_salary)
+    VALUES (v_emp_id, v_new_salary);
+
+    COMMIT;
+
+    DBMS_OUTPUT.PUT_LINE('Salary for employee ' || v_emp_id || ' updated successfully to ' || v_new_salary);
+
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Employee ID does not exist.');
+
+    WHEN OTHERS THEN
+        RAISE_APPLICATION_ERROR(-20002, 'An unexpected error occurred: ' || SQLERRM);
+
+END;

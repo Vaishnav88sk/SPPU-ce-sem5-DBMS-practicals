@@ -1,0 +1,66 @@
+1. Stored Procedure to Record Employee Commission:
+CREATE OR REPLACE PROCEDURE CalculateEmployeeCommission IS
+    v_emp_id       Employee.emp_id%TYPE;
+    v_salary       Employee.salary%TYPE;
+    v_doj          Employee.DoJ%TYPE;
+    v_experience   NUMBER;
+    v_commission   NUMBER;
+
+    CURSOR emp_cursor IS
+        SELECT emp_id, salary, DoJ
+        FROM Employee;
+
+BEGIN
+    OPEN emp_cursor;
+    
+    LOOP
+        FETCH emp_cursor INTO v_emp_id, v_salary, v_doj;
+        EXIT WHEN emp_cursor%NOTFOUND;
+
+        v_experience := FLOOR(MONTHS_BETWEEN(SYSDATE, v_doj) / 12);
+
+        IF v_salary > 10000 THEN
+            v_commission := v_salary * 0.004; -- 0.4%
+        ELSIF v_salary < 10000 AND v_experience > 10 THEN
+            v_commission := v_salary * 0.0035; -- 0.35%
+        ELSIF v_salary < 3000 THEN
+            v_commission := v_salary * 0.0025; -- 0.25%
+        ELSE
+            v_commission := v_salary * 0.0015; -- 0.15%
+        END IF;
+
+        UPDATE Employee
+        SET commission = v_commission
+        WHERE emp_id = v_emp_id;
+    END LOOP;
+
+    CLOSE emp_cursor;
+
+    COMMIT;
+
+    DBMS_OUTPUT.PUT_LINE('Employee commissions updated successfully.');
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Error in updating commission: ' || SQLERRM);
+END CalculateEmployeeCommission;
+
+2. PL/SQL Function to Return Manager Name for a Department:
+CREATE OR REPLACE FUNCTION GetManagerName(p_dept_id IN Employee.dept_id%TYPE)
+RETURN VARCHAR2 IS
+    v_manager_name VARCHAR2(50);
+BEGIN
+    SELECT manager_name INTO v_manager_name
+    FROM Manager
+    WHERE dept_id = p_dept_id;
+
+    RETURN v_manager_name;
+
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN 'Manager not found for this department';
+    WHEN OTHERS THEN
+        RETURN 'An error occurred: ' || SQLERRM;
+END GetManagerName;
+
+
+3. Execute functions.

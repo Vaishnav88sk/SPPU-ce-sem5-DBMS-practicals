@@ -1,0 +1,33 @@
+CREATE TABLE Customer (CustID INT PRIMARY KEY,Name VARCHAR(50),Cust_Address VARCHAR(100),Phone_no VARCHAR(15),Age INT);
+
+CREATE TABLE Branch (Branch_ID INT PRIMARY KEY,Branch_Name VARCHAR(50),Address VARCHAR(100));
+
+CREATE TABLE Account (Account_no INT PRIMARY KEY,Branch_ID INT,CustID INT,date_open DATE,Account_type VARCHAR(20),Balance DECIMAL(10, 2),FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID),FOREIGN KEY (CustID) REFERENCES Customer(CustID));
+
+INSERT INTO Customer (CustID, Name, Cust_Address, Phone_no, Age) VALUES (101, 'John Doe', 'Pune', '1234567890', 40),(102, 'Jane Smith', 'Mumbai', '0987654321', 28),(103, 'Mike Johnson', 'Pune', '1231231231', 36),(104, 'Emily Brown', 'Delhi', '3213213210', 50),(105, 'Alice Williams', 'Pune', '4564564560', 42);
+
+INSERT INTO Branch (Branch_ID, Branch_Name, Address) VALUES (1, 'Main Branch', 'Pune'), (2, 'City Branch', 'Mumbai'), (3, 'Town Branch', 'Delhi');
+
+INSERT INTO Account (Account_no, Branch_ID, CustID, date_open, Account_type, Balance) VALUES (201, 1, 101, '2022-01-10', 'Saving Account', 50000),(202, 2, 102, '2021-05-15', 'Current Account', 20000),(203, 1, 103, '2020-08-25', 'Saving Account', 30000),(204, 3, 104, '2019-07-30', 'Saving Account', 10000),(205, 1, 105, '2023-04-17', 'Current Account', 45000);
+
+
+1. Add the column Email_Address in the Customer table:
+ALTER TABLE Customer ADD COLUMN Email_Address VARCHAR(50);
+
+2. Change the name of column Email_Address to Email_ID in the Customer table:
+ALTER TABLE Customer CHANGE COLUMN Email_Address Email_ID VARCHAR(50);
+
+3. Display the customer details with the highest balance in the account:
+SELECT Customer.* FROM Customer JOIN Account ON Customer.CustID = Account.CustID WHERE Account.Balance = (SELECT MAX(Balance) FROM Account);
+
+4. Display the customer details with the lowest balance for Account_type = 'Saving Account':
+SELECT Customer.* FROM Customer JOIN Account ON Customer.CustID = Account.CustID WHERE Account.Account_type = 'Saving Account' AND Account.Balance = (SELECT MIN(Balance) FROM Account WHERE Account_type = 'Saving Account');
+
+5. Display the customer details who live in Pune and have age greater than 35:
+SELECT * FROM Customer WHERE Cust_Address = 'Pune' AND Age > 35;
+
+6. Display the CustID, Name, and Age of the customer in ascending order of their age:
+SELECT CustID, Name, Age FROM Customer ORDER BY Age ASC;
+
+7. Display the Name and Branch_ID of the customer grouped by Account_type:
+SELECT Customer.Name, Account.Branch_ID FROM Customer JOIN Account ON Customer.CustID = Account.CustID GROUP BY Account.Account_type, Customer.Name, Account.Branch_ID;
