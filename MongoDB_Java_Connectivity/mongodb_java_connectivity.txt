@@ -1,0 +1,26 @@
+- Prerequisites:
+1. In the terminal, run the following commands:
+    -> mongosh
+    In the mongosh,
+    -> use Institute;
+    -> db.createCollection("Students")
+    -> db.Students.insertOne({name:"Test", age:20})
+
+
+- Connectivity and setup:
+1. Using VSCode:
+    a. Download Java Extension pack.
+    b. Enter Ctrl+Shift+P
+    c. Enter Create Java Project
+    d. Set the location.
+    e. Enter project name. Hit Enter.
+    f. In the src folder, in the App.java write the code. (Class name of main function should be filename.)
+    e. Click on java project at the left bottom.
+    g. Click on reference libraries, Add the jar file. (or copy and paste it.)
+    h. Run the java code.
+
+2. Using Eclipse:
+    a. Create java project.
+    b. In the src folder, create a java file and write the code. (Class name of main function should be filename.)
+    c. In the JRE System Library, add the jar file. (or copy and paste it.)
+    d. Run the java code.
