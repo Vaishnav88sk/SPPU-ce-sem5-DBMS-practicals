@@ -53,13 +53,13 @@ public static void main( String args[] )
 		System.out.println("Enter Student rollno");
 		Scanner sc=new Scanner(System.in);
 		int sroll = sc.nextInt();
-		System.out.println("Enter Student Name");
+		System.out.print("Enter Student Name: ");
 		String sname = sc.next();
-		System.out.println("Enter Student Class");
+		System.out.print("Enter Student Class: ");
 		String sclass = sc.next();
-		System.out.println("Enter Student Marks");
+		System.out.print("Enter Student Marks: ");
 		int smarks = sc.nextInt();
-		System.out.println("Enter Student Technical Interest");
+		System.out.print("Enter Student Technical Interest: ");
 		String sti = sc.next();
 		document.put("stu_rollno",sroll);
 		document.put("stu_name",sname);
@@ -73,7 +73,7 @@ public static void main( String args[] )
 	{
 		System.out.println("Deleting document");
 		BasicDBObject document = new BasicDBObject();
-		System.out.println("Enter Student rollno");
+		System.out.print("Enter Student rollno: ");
 		Scanner sc=new Scanner(System.in);
 		int sroll = sc.nextInt();
 		document.put("stu_rollno",sroll);
@@ -88,7 +88,7 @@ public static void main( String args[] )
 		int sroll = sc1.nextInt();
 		BasicDBObject searchQuery = new	BasicDBObject().append("stu_rollno", sroll);
 		BasicDBObject newDocument = new BasicDBObject();
-		System.out.println("Enter New marks");
+		System.out.print("Enter New marks: ");
 		Scanner sc=new Scanner(System.in);
 		int smarks = sc.nextInt();
 		newDocument.append("$set", new BasicDBObject().append("marks",smarks));
@@ -106,7 +106,7 @@ public static void main( String args[] )
 	}
 	public static void conditionalDisplay(DBCollection coll)
 	{
-		System.out.println("Enter Minimum marks");
+		System.out.print("Enter Minimum marks: ");
 		Scanner sc=new Scanner(System.in);
 		int smarks=sc.nextInt();
 		DBCursor cursor = coll.find();
@@ -118,7 +118,7 @@ public static void main( String args[] )
 			System.out.println(cursor.curr());
 		}
 		else
-			System.out.println("Minimum marks");
+			System.out.print("Minimum marks: ");
 		}
 		}
 	}
