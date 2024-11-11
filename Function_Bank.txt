@@ -1,0 +1,58 @@
+1. Procedure:
+CREATE OR REPLACE PROCEDURE Calculate_Interest (
+    p_Account_No IN INT,
+    p_Interest_Rate IN DECIMAL
+) IS
+    v_Balance DECIMAL(10, 2);
+    v_NoOfYears INT;
+    v_Interest_Amt DECIMAL(10, 2);
+BEGIN
+    SELECT Balance, NoOfYears
+    INTO v_Balance, v_NoOfYears
+    FROM Account
+    WHERE Account_No = p_Account_No;
+
+    v_Interest_Amt := (v_Balance * p_Interest_Rate * v_NoOfYears) / 100;
+
+    INSERT INTO Earned_Interest (Account_No, Interest_Amt)
+    VALUES (p_Account_No, v_Interest_Amt);
+
+    COMMIT;
+
+    FOR rec IN (SELECT * FROM Earned_Interest) LOOP
+        DBMS_OUTPUT.PUT_LINE('Account No: ' || rec.Account_No || ', Interest Amount: ' || rec.Interest_Amt);
+    END LOOP;
+END;
+
+2. Function:
+CREATE OR REPLACE FUNCTION Get_Accounts_With_High_Balance
+    RETURN SYS_REFCURSOR IS
+    high_balance_accounts SYS_REFCURSOR;
+BEGIN
+    OPEN high_balance_accounts FOR
+        SELECT * FROM Account
+        WHERE Balance > 50000;
+    
+    RETURN high_balance_accounts;
+END;
+
+
+-- Execution:
+1. Procedure:
+EXEC Calculate_Interest(p_Account_No => 101, p_Interest_Rate => 5);
+
+2. Function:
+DECLARE
+    result_cursor SYS_REFCURSOR;
+    account_record Account%ROWTYPE;
+BEGIN
+    result_cursor := Get_Accounts_With_High_Balance;
+
+    LOOP
+        FETCH result_cursor INTO account_record;
+        EXIT WHEN result_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('Account No: ' || account_record.Account_No || ', Cust Name: ' || account_record.Cust_Name || ', Balance: ' || account_record.Balance);
+    END LOOP;
+    
+    CLOSE result_cursor;
+END;

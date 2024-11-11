@@ -1,0 +1,28 @@
+Trigger 1. Trigger to Record Salary Changes: (TRIGGER record_salary_change)
+DELIMITER $$
+
+CREATE TRIGGER record_salary_change
+AFTER UPDATE ON Employee
+FOR EACH ROW
+BEGIN
+    IF OLD.salary <> NEW.salary THEN
+        INSERT INTO Salary_Backup (emp_id, old_salary, new_salary, salary_difference)
+        VALUES (OLD.emp_id, OLD.salary, NEW.salary, NEW.salary - OLD.salary);
+    END IF;
+END $$
+
+DELIMITER ;
+
+Trigger 2. Trigger to Prevent Deleting CEO: (TRIGGER prevent_ceo_deletion)
+DELIMITER $$
+
+CREATE TRIGGER prevent_ceo_deletion
+BEFORE DELETE ON Employee
+FOR EACH ROW
+BEGIN
+    IF OLD.designation = 'CEO' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cannot delete employee with designation CEO';
+    END IF;
+END $$
+
+DELIMITER ;
