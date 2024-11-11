@@ -1,0 +1,33 @@
+Mongosh commands:
+-> use Students_Data
+-> db.Social.createCollection("Student")
+-> db.Student.insertMany([{ roll_no: 1, name: "Alice", class: "TE", dept: "Computer Science", aggregate_marks: 75 },
+    { roll_no: 2, name: "Bob", class: "SE", dept: "Mechanical", aggregate_marks: 80 },
+    { roll_no: 3, name: "Charlie", class: "BE", dept: "Electrical", aggregate_marks: 85 },
+    { roll_no: 4, name: "David", class: "TE", dept: "Computer Science", aggregate_marks: 95 },
+    { roll_no: 5, name: "Eve", class: "SE", dept: "Electrical", aggregate_marks: 70 },
+    { roll_no: 6, name: "Frank", class: "BE", dept: "Computer Science", aggregate_marks: 90 },
+    { roll_no: 7, name: "Grace", class: "SE", dept: "Mechanical", aggregate_marks: 60 },
+    { roll_no: 8, name: "Hannah", class: "TE", dept: "Electrical", aggregate_marks: 88 },
+    { roll_no: 9, name: "Ivy", class: "BE", dept: "Electrical", aggregate_marks: 78 },
+    { roll_no: 10, name: "Jack", class: "TE", dept: "Mechanical", aggregate_marks: 85 }]);
+
+1. Finding the Total Marks of Students of “TE” Class Department-wise: 
+var mapFunction1 = function() {if (this.class === "TE") {emit(this.dept, this.aggregate_marks);}};
+var reduceFunction1 = function(key, values) {return Array.sum(values);};
+db.Student.mapReduce(mapFunction1, reduceFunction1, { out: "TotalMarks_TE_DepartmentWise" });
+
+2. Finding the Highest Marks of Students of “SE” Class Department-wise:
+var mapFunction2 = function() {if (this.class === "SE") {emit(this.dept, this.aggregate_marks);}};
+var reduceFunction2 = function(key, values) {return Math.max.apply(Math, values);};
+db.Student.mapReduce(mapFunction2, reduceFunction2, { out: "HighestMarks_SE_DepartmentWise" });
+
+3. Finding the Average Marks of Students of “BE” Class Department-wise:
+var mapFunction3 = function() {if (this.class === "BE") {emit(this.dept, { totalMarks: this.aggregate_marks, count: 1 });}};
+var reduceFunction3 = function(key, values) {var result = { totalMarks: 0, count: 0 }; values.forEach(function(value) { result.totalMarks += value.totalMarks; result.count += value.count;}); result.averageMarks = result.totalMarks / result.count; return result;};
+db.Student.mapReduce(mapFunction3, reduceFunction3, { out: "AverageMarks_BE_DepartmentWise" });
+
+
+-> db.TotalMarks_TE_DepartmentWise.find();
+-> db.HighestMarks_SE_DepartmentWise.find();
+-> db.AverageMarks_BE_DepartmentWise.find();

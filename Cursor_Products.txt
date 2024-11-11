@@ -1,0 +1,61 @@
+Cursor 1. Parameterized Cursor to Display Products in the Given Price Range of "Apparel" Type:
+DECLARE
+    min_price DECIMAL(10, 2);
+    max_price DECIMAL(10, 2);
+
+    CURSOR apparel_cursor (min_price DECIMAL, max_price DECIMAL) IS
+        SELECT Product_id, Product_Name, Product_Type, Price
+        FROM Products
+        WHERE Product_Type = 'Apparel'
+          AND Price BETWEEN min_price AND max_price;
+
+    product_record Products%ROWTYPE;
+BEGIN
+    min_price := &min_price;  -- Accept input for minimum price
+    max_price := &max_price;  -- Accept input for maximum price
+
+    OPEN apparel_cursor(min_price, max_price);
+
+    LOOP
+        FETCH apparel_cursor INTO product_record;
+        EXIT WHEN apparel_cursor%NOTFOUND;
+        
+        DBMS_OUTPUT.PUT_LINE('Product ID: ' || product_record.Product_id || ', Product Name: ' || product_record.Product_Name || ', Price: ' || product_record.Price);
+    END LOOP;
+
+    CLOSE apparel_cursor;
+END;
+
+Cursor 2. Explicit Cursor to Display Products with Price Greater than 5000:
+DECLARE
+    CURSOR expensive_products_cursor IS
+        SELECT Product_id, Product_Name, Product_Type, Price
+        FROM Products
+        WHERE Price > 5000;
+
+    product_record Products%ROWTYPE;
+BEGIN
+    OPEN expensive_products_cursor;
+
+    LOOP
+        FETCH expensive_products_cursor INTO product_record;
+        EXIT WHEN expensive_products_cursor%NOTFOUND;
+
+        DBMS_OUTPUT.PUT_LINE('Product ID: ' || product_record.Product_id || ', Product Name: ' || product_record.Product_Name || ', Price: ' || product_record.Price);
+    END LOOP;
+
+    CLOSE expensive_products_cursor;
+END;
+
+Cursor 3. Implicit Cursor to Display the Number of Records Affected by an Update Operation:
+DECLARE
+    rows_affected NUMBER;
+
+BEGIN
+    UPDATE Products
+    SET Price = Price + 1000;
+
+    rows_affected := SQL%ROWCOUNT;
+
+    DBMS_OUTPUT.PUT_LINE('Number of products updated: ' || rows_affected);
+END;

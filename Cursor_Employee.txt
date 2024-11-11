@@ -1,0 +1,61 @@
+Cursor 1. Explicit Cursor to Display Records of All Employees with Salary Greater Than 50,000:
+DECLARE
+    CURSOR emp_cursor IS
+        SELECT Emp_id, Emp_Name, Salary
+        FROM Employee
+        WHERE Salary > 50000;
+    
+    v_emp_id Employee.Emp_id%TYPE;
+    v_emp_name Employee.Emp_Name%TYPE;
+    v_salary Employee.Salary%TYPE;
+BEGIN
+    OPEN emp_cursor;
+    
+    LOOP
+        FETCH emp_cursor INTO v_emp_id, v_emp_name, v_salary;
+        
+        EXIT WHEN emp_cursor%NOTFOUND;
+        
+        DBMS_OUTPUT.PUT_LINE('Employee ID: ' || v_emp_id || ', Name: ' || v_emp_name || ', Salary: ' || v_salary);
+    END LOOP;
+    
+    CLOSE emp_cursor;
+END;
+
+
+Cursor 2. PL/SQL Block Using Implicit Cursor to Display Total Number of Tuples in the Employee Table:
+DECLARE
+    v_count INTEGER;
+BEGIN
+    SELECT COUNT(*) INTO v_count FROM Employee;
+    
+    DBMS_OUTPUT.PUT_LINE('Total number of employees: ' || v_count);
+END;
+
+
+Cursor 3. PL/SQL Block Using Parameterized Cursor to Display Salary of Employee ID Entered by the User:
+DECLARE
+    CURSOR emp_salary_cursor (p_emp_id INT) IS
+        SELECT Salary
+        FROM Employee
+        WHERE Emp_id = p_emp_id;
+    
+    v_salary Employee.Salary%TYPE;
+    v_emp_id INT := &emp_id;  -- Accepting user input for Emp_id
+    
+BEGIN
+    OPEN emp_salary_cursor(v_emp_id);
+    
+    FETCH emp_salary_cursor INTO v_salary;
+    
+    IF emp_salary_cursor%FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('Salary of Employee with ID ' || v_emp_id || ' is: ' || v_salary);
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Employee with ID ' || v_emp_id || ' not found.');
+    END IF;
+    
+    CLOSE emp_salary_cursor;
+END;
+
+
+

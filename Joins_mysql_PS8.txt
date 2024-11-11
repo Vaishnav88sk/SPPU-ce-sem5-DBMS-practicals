@@ -1,0 +1,23 @@
+CREATE TABLE Employee (Employee_id INT PRIMARY KEY,First_name VARCHAR(50),Last_name VARCHAR(50),Hire_date DATE,Salary DECIMAL(10, 2),Job_title VARCHAR(50),Manager_id INT,Department_id INT,FOREIGN KEY (Manager_id) REFERENCES Manager(Manager_id),FOREIGN KEY (Department_id) REFERENCES Departments(Department_id));
+
+CREATE TABLE Departments (Department_id INT PRIMARY KEY,Department_name VARCHAR(50),Manager_id INT,Location_id INT,FOREIGN KEY (Manager_id) REFERENCES Manager(Manager_id),FOREIGN KEY (Location_id) REFERENCES Locations(location_id));
+
+CREATE TABLE Locations (location_id INT PRIMARY KEY,Street_address VARCHAR(100),Postal_code VARCHAR(20),City VARCHAR(50),State VARCHAR(50),Country_id INT);
+
+CREATE TABLE Manager (Manager_id INT PRIMARY KEY,Manager_name VARCHAR(50));
+
+1. Find the names (first_name, last_name) and the salaries of the employees who have a higher salary than the employee whose last_name is "Singh":
+SELECT e.First_name, e.Last_name, e.Salary FROM Employee e WHERE e.Salary > (SELECT Salary FROM Employee WHERE Last_name = 'Singh');
+
+2. Find the names (first_name, last_name) of the employees who have a manager and work for a department based in the United States:
+SELECT e.First_name, e.Last_name FROM Employee e JOIN Departments d ON e.Department_id = d.Department_id JOIN Locations l ON d.Location_id = l.location_id WHERE e.Manager_id IS NOT NULL AND l.Country_id = 'US';
+
+3. Find the names (first_name, last_name), the salary of the employees whose salary is greater than the average salary:
+SELECT First_name, Last_name, Salary FROM Employee WHERE Salary > (SELECT AVG(Salary) FROM Employee);
+
+4. Find the employee id, name (last_name) along with their manager_id and manager name (last_name):
+SELECT e.Employee_id, e.Last_name AS Employee_last_name, e.Manager_id, m.Manager_name FROM Employee e JOIN Manager m ON e.Manager_id = m.Manager_id;
+
+5. Find the names and hire date of the employees who were hired after the employee named "Jones":
+SELECT e.First_name, e.Last_name, e.Hire_date FROM Employee e WHERE e.Hire_date > (SELECT Hire_date FROM Employee WHERE Last_name = 'Jones');
+

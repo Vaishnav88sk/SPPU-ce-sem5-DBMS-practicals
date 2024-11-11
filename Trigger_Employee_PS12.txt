@@ -1,0 +1,19 @@
+Trigger 1. Trigger to Ensure Salary Is Not Decreased: (TRIGGER salary_check)
+CREATE OR REPLACE TRIGGER salary_check
+BEFORE UPDATE ON Employee
+FOR EACH ROW
+BEGIN
+    IF :NEW.salary < :OLD.salary THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Salary cannot be decreased!');
+    END IF;
+END;
+
+
+Trigger 2. Trigger to Log Job Title Changes into the Job History Table: (TRIGGER job_title_change)
+CREATE OR REPLACE TRIGGER job_title_change
+AFTER UPDATE OF job_title ON Employee
+FOR EACH ROW
+BEGIN
+    INSERT INTO job_history (emp_id, old_job_title, old_dept_id, start_date, end_date)
+    VALUES (:OLD.emp_id, :OLD.job_title, :OLD.dept_id, :OLD.DoJ, SYSDATE);
+END;

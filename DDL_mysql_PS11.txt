@@ -1,0 +1,27 @@
+CREATE TABLE Customer ( CustID INT PRIMARY KEY, Name VARCHAR(100), Cust_Address VARCHAR(255), Phone_no VARCHAR(15), Email_ID VARCHAR(100), Age INT);
+
+CREATE TABLE Branch ( BranchID INT PRIMARY KEY, Branch_Name VARCHAR(100), Address VARCHAR(255));
+
+CREATE TABLE Account ( Account_no INT PRIMARY KEY, Branch_ID INT, CustID INT, date_open DATE, Account_type VARCHAR(50), Balance DECIMAL(10, 2), FOREIGN KEY (Branch_ID) REFERENCES Branch(BranchID), FOREIGN KEY (CustID) REFERENCES Customer(CustID));
+
+
+INSERT INTO Customer (CustID, Name, Cust_Address, Phone_no, Email_ID, Age) VALUES (1, 'Alice', '123 Elm Street, New York', '123-456-7890', 'alice@email.com', 30), (2, 'Bob', '456 Oak Road, Los Angeles', '234-567-8901', 'bob@email.com', 50), (3, 'Charlie', '789 Pine Avenue, Chicago', '345-678-9012', 'charlie@email.com', 25), (4, 'David', '101 Maple Blvd, Boston', '456-789-0123', 'david@email.com', 40), (5, 'Eve', '202 Cedar Lane, Seattle', '567-890-1234', 'eve@email.com', 35);
+
+INSERT INTO Branch (BranchID, Branch_Name, Address) VALUES (1, 'Main Branch', '123 Main St, New York'), (2, 'Downtown Branch', '456 Downtown St, Los Angeles'), (3, 'Uptown Branch', '789 Uptown St, Chicago');
+
+INSERT INTO Account (Account_no, Branch_ID, CustID, date_open, Account_type, Balance) VALUES (1001, 1, 1, '2020-01-15', 'Savings', 5000.00), (1002, 2, 2, '2021-03-22', 'Checking', 1500.00), (1003, 3, 3, '2019-06-18', 'Savings', 2000.00), (1004, 1, 4, '2020-11-05', 'Current', 3000.00), (1005, 2, 5, '2021-07-30', 'Savings', 10000.00);
+
+3. Create an Index on the Primary Key Column of the Account Table:
+CREATE INDEX idx_account_no ON Account(Account_no);
+
+4. Create a View Customer_Info to Display Customer Details for Age Less Than 45:
+CREATE VIEW Customer_Info AS SELECT CustID, Name, Cust_Address, Phone_no, Email_ID, Age FROM Customer WHERE Age < 45;
+
+5. Update the View with Open Date as '16/4/2017':
+CREATE OR REPLACE VIEW Customer_Info AS SELECT c.CustID, c.Name, c.Cust_Address, c.Phone_no, c.Email_ID, c.Age, a.date_open FROM Customer c JOIN Account a ON c.CustID = a.CustID WHERE c.Age < 45 AND a.date_open = '2017-04-16';
+
+6. Create a Sequence on the Branch Table:
+ALTER TABLE Branch MODIFY COLUMN BranchID INT AUTO_INCREMENT;
+
+7. Create a Synonym 'Branch_info' for the Branch Table:
+CREATE VIEW Branch_info AS SELECT * FROM Branch;

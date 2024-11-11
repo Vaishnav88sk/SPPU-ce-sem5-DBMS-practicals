@@ -1,0 +1,39 @@
+Mongosh commands:
+-> use Social
+-> db.Social.createCollection("Social_Media")
+-> db.Social_Media.insertMany([{ User_Id: 1, User_Name: "Alice", No_of_Posts: 120, No_of_Friends: 50, Friends_List: ["Bob", "Charlie", "David"], Interests: ["Photography", "Traveling", "Reading"] },
+    { User_Id: 2, User_Name: "Bob", No_of_Posts: 80, No_of_Friends: 20, Friends_List: ["Alice", "David"], Interests: ["Football", "Music"] },
+    { User_Id: 3, User_Name: "Charlie", No_of_Posts: 150, No_of_Friends: 70, Friends_List: ["Alice", "Eve"], Interests: ["Gaming", "Tech"] },
+    { User_Id: 4, User_Name: "David", No_of_Posts: 200, No_of_Friends: 80, Friends_List: ["Alice", "Bob", "Charlie"], Interests: ["Cooking", "Cycling"] },
+    { User_Id: 5, User_Name: "Eve", No_of_Posts: 45, No_of_Friends: 15, Friends_List: ["Charlie"], Interests: ["Dancing", "Art"] },
+    { User_Id: 6, User_Name: "Frank", No_of_Posts: 300, No_of_Friends: 150, Friends_List: ["Alice", "David", "Bob", "Charlie"], Interests: ["Sports", "Movies"] },
+    { User_Id: 7, User_Name: "Grace", No_of_Posts: 70, No_of_Friends: 30, Friends_List: ["Alice", "Bob"], Interests: ["Fashion", "Cooking"] },
+    { User_Id: 8, User_Name: "Hank", No_of_Posts: 50, No_of_Friends: 10, Friends_List: ["David"], Interests: ["Photography", "Fitness"] },
+    { User_Id: 9, User_Name: "Ivy", No_of_Posts: 20, No_of_Friends: 5, Friends_List: ["Eve"], Interests: ["Yoga", "Cooking"] },
+    { User_Id: 10, User_Name: "Jack", No_of_Posts: 250, No_of_Friends: 100, Friends_List: ["Alice", "Grace", "Frank"], Interests: ["Swimming", "Reading"] },
+    { User_Id: 11, User_Name: "Katie", No_of_Posts: 90, No_of_Friends: 25, Friends_List: ["Grace", "Charlie"], Interests: ["Travel", "Sports"] },
+    { User_Id: 12, User_Name: "Liam", No_of_Posts: 60, No_of_Friends: 15, Friends_List: ["Eve", "David"], Interests: ["Music", "Art"] },
+    { User_Id: 13, User_Name: "Mona", No_of_Posts: 110, No_of_Friends: 40, Friends_List: ["Alice", "Katie"], Interests: ["Photography", "Movies"] },
+    { User_Id: 14, User_Name: "Nina", No_of_Posts: 200, No_of_Friends: 60, Friends_List: ["Frank", "David"], Interests: ["Reading", "Fitness"] },
+    { User_Id: 15, User_Name: "Oscar", No_of_Posts: 95, No_of_Friends: 35, Friends_List: ["Bob", "Katie"], Interests: ["Movies", "Cycling"] },
+    { User_Id: 16, User_Name: "Paul", No_of_Posts: 130, No_of_Friends: 55, Friends_List: ["Eve", "Jack"], Interests: ["Running", "Reading"] },
+    { User_Id: 17, User_Name: "Quinn", No_of_Posts: 50, No_of_Friends: 10, Friends_List: ["David"], Interests: ["Music", "Fashion"] },
+    { User_Id: 18, User_Name: "Rita", No_of_Posts: 80, No_of_Friends: 30, Friends_List: ["Charlie", "Liam"], Interests: ["Art", "Dancing"] },
+    { User_Id: 19, User_Name: "Steve", No_of_Posts: 210, No_of_Friends: 90, Friends_List: ["Oscar", "Grace"], Interests: ["Gaming", "Swimming"] },
+    { User_Id: 20, User_Name: "Tina", No_of_Posts: 60, No_of_Friends: 20, Friends_List: ["Bob", "Jack"], Interests: ["Reading", "Traveling"] }]);
+
+
+1. List All the Users from Collection Social_Media in a Formatted Manner:
+db.Social_Media.find({}, { _id: 0, User_Name: 1, No_of_Posts: 1 }).forEach(function(user) {print("User: " + user.User_Name + ", Posts: " + user.No_of_Posts);});
+
+2. Find All Users Having Number of Posts Greater Than 100:
+db.Social_Media.find({ No_of_Posts: { $gt: 100 } }, { _id: 0, User_Name: 1, No_of_Posts: 1 });
+
+3. List the User Names and Their Respective Friends List:
+db.Social_Media.find({}, { _id: 0, User_Name: 1, Friends_List: 1 });
+
+4. Display the User IDs and Friends List of Users Who Have More Than 5 Friends:
+db.Social_Media.find({ No_of_Friends: { $gt: 5 } }, { _id: 0, User_Id: 1, Friends_List: 1 });
+
+5. Display All Users with No of Posts in Descending Order:
+db.Social_Media.find({}, { _id: 0, User_Name: 1, No_of_Posts: 1 }).sort({ No_of_Posts: -1 });
