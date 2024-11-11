@@ -1,6 +1,6 @@
 Mongosh commands:
 -> use Social
--> db.Social.createCollection("Social_Media")
+-> db.createCollection("Social_Media")
 -> db.Social_Media.insertMany([{ User_Id: 1, User_Name: "Alice", No_of_Posts: 120, No_of_Friends: 50, Friends_List: ["Bob", "Charlie", "David"], Interests: ["Photography", "Traveling", "Reading"] },
     { User_Id: 2, User_Name: "Bob", No_of_Posts: 80, No_of_Friends: 20, Friends_List: ["Alice", "David"], Interests: ["Football", "Music"] },
     { User_Id: 3, User_Name: "Charlie", No_of_Posts: 150, No_of_Friends: 70, Friends_List: ["Alice", "Eve"], Interests: ["Gaming", "Tech"] },
