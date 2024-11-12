@@ -19,7 +19,7 @@ public static void main( String args[] )
 		sc2 = new Scanner(System.in);
 		int choice;
 		do {
-			System.out.println("Enter your choice of operation \n1. Display All \n2. Insert Document \n3. Delete Document \n4. Update \n5. Conditional Display \n6.Exit \n");
+			System.out.println("Enter your choice of operation \n1. Display All \n2. Insert Document \n3. Delete Document \n4. Update \n5.Exit \n");
             System.out.print("Enter your choice: ");
 			choice = sc2.nextInt();
 			switch (choice) {
