@@ -49,9 +49,9 @@ CREATE OR REPLACE FUNCTION GetManagerName(p_dept_id IN Employee.dept_id%TYPE)
 RETURN VARCHAR2 IS
     v_manager_name VARCHAR2(50);
 BEGIN
-    SELECT manager_name INTO v_manager_name
-    FROM Manager
-    WHERE dept_id = p_dept_id;
+    SELECT emp_name INTO v_manager_name
+    FROM Employee
+    WHERE dept_id = p_dept_id AND job_title = 'Manager';
 
     RETURN v_manager_name;
 
