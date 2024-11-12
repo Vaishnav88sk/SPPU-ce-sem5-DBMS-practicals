@@ -31,16 +31,14 @@ public static void main( String args[] )
 			break;
 			case 4: updateDoc(coll);
 			break;
-			case 5: conditionalDisplay(coll);
-			break;
-			case 6: System.out.println("Exiting Program...");
+			case 5: System.out.println("Exiting Program...");
 			System.exit(0);
 			break;
 			default:
 				System.out.println(choice + " is not a valid Menu Option! Please Select Another.");
 			}
 		}
-		while(choice != 6);
+		while(choice != 5);
 		}
 	catch(Exception ex){
 			ex.printStackTrace();
@@ -104,21 +102,5 @@ public static void main( String args[] )
 			System.out.println(cursor.next());
 		}
 	}
-	public static void conditionalDisplay(DBCollection coll)
-	{
-		System.out.print("Enter Minimum marks: ");
-		Scanner sc=new Scanner(System.in);
-		int smarks=sc.nextInt();
-		DBCursor cursor = coll.find();
-		while(cursor.hasNext()) 
-		{
-		int marks=(int) cursor.next().get("marks");
-		if(marks > smarks )
-		{
-			System.out.println(cursor.curr());
-		}
-		else
-			System.out.print("Minimum marks: ");
-		}
-		}
+	
 	}
