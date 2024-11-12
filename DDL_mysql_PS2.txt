@@ -14,13 +14,13 @@ INSERT INTO Account (Account_no, Branch_ID, CustID, open_date, Account_type, Bal
 
 
 3. Create a View for Savings Account Customers Opened on 16/8/2018: 
-CREATE VIEW Saving_Account AS SELECT Customer.CustID, Customer.Name, Customer.Cust_Address, Customer.Phone_no, Customer.Email_ID, Customer.Age, Account.open_date FROM Customer JOIN Account ON Customer.CustID = Account.CustID WHERE Account.Account_type = 'Saving' AND Account.open_date = '2018-08-16';
+CREATE VIEW Saving_Account AS SELECT Customer.*, Account.open_date FROM Customer JOIN Account ON Customer.CustID = Account.CustID WHERE Account.Account_type = 'Saving' AND Account.open_date = '2018-08-16';
 
 4. Update the View with Cust_Address as Pune for CustID = 103:
 UPDATE Customer SET Cust_Address = 'Pune' WHERE CustID = 103;
 
 5. Create a View for Loan Account Customers Opened on 16/2/2018:
-CREATE VIEW Loan_Account AS SELECT Customer.CustID, Customer.Name, Customer.Cust_Address, Customer.Phone_no, Customer.Email_ID, Customer.Age, Account.open_date FROM Customer JOIN Account ON Customer.CustID = Account.CustID WHERE Account.Account_type = 'Loan' AND Account.open_date = '2018-02-16';
+CREATE VIEW Loan_Account AS SELECT Customer.*, Account.open_date FROM Customer JOIN Account ON Customer.CustID = Account.CustID WHERE Account.Account_type = 'Loan' AND Account.open_date = '2018-02-16';
 
 6. Create an Index on the Primary Key Column of the Customer Table:
 CREATE INDEX idx_CustID ON Customer(CustID);

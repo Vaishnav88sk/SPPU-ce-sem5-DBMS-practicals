@@ -9,19 +9,22 @@ INSERT INTO Customer (CustID, Name, Cust_Address, Phone_no, Email_ID, Age) VALUE
 
 INSERT INTO Branch (BranchID, Branch_Name, Address) VALUES (1, 'Main Branch', '123 Main St, New York'), (2, 'Downtown Branch', '456 Downtown St, Los Angeles'), (3, 'Uptown Branch', '789 Uptown St, Chicago');
 
-INSERT INTO Account (Account_no, Branch_ID, CustID, date_open, Account_type, Balance) VALUES (1001, 1, 1, '2020-01-15', 'Savings', 5000.00), (1002, 2, 2, '2021-03-22', 'Checking', 1500.00), (1003, 3, 3, '2019-06-18', 'Savings', 2000.00), (1004, 1, 4, '2020-11-05', 'Current', 3000.00), (1005, 2, 5, '2021-07-30', 'Savings', 10000.00);
+INSERT INTO Account (Account_no, Branch_ID, CustID, date_open, Account_type, Balance) VALUES (1001, 1, 1, '2017-04-16', 'Savings', 5000.00), (1002, 2, 2, '2021-03-22', 'Checking', 1500.00), (1003, 3, 3, '2019-06-18', 'Savings', 2000.00), (1004, 1, 4, '2020-11-05', 'Current', 3000.00), (1005, 2, 5, '2021-07-30', 'Savings', 10000.00);
 
 3. Create an Index on the Primary Key Column of the Account Table:
 CREATE INDEX idx_account_no ON Account(Account_no);
 
 4. Create a View Customer_Info to Display Customer Details for Age Less Than 45:
-CREATE VIEW Customer_Info AS SELECT CustID, Name, Cust_Address, Phone_no, Email_ID, Age FROM Customer WHERE Age < 45;
+CREATE VIEW Customer_Info AS SELECT * FROM Customer WHERE Age < 45;
 
 5. Update the View with Open Date as '16/4/2017':
-CREATE OR REPLACE VIEW Customer_Info AS SELECT c.CustID, c.Name, c.Cust_Address, c.Phone_no, c.Email_ID, c.Age, a.date_open FROM Customer c JOIN Account a ON c.CustID = a.CustID WHERE c.Age < 45 AND a.date_open = '2017-04-16';
+CREATE OR REPLACE VIEW Customer_Info AS SELECT c.*, a.date_open FROM Customer c JOIN Account a ON c.CustID = a.CustID WHERE c.Age < 45 AND a.date_open = '2017-04-16';
 
 6. Create a Sequence on the Branch Table:
-ALTER TABLE Branch MODIFY COLUMN BranchID INT AUTO_INCREMENT;
+alter table Account drop foreign key Account_ibfk_1;
+Alter table Customer modify CustID int auto_increment;
+alter table Account add constraint account_ibfk_2 foreign key(CustID) references Customer(CustID);
+show table Status like 'Customer';
 
 7. Create a Synonym 'Branch_info' for the Branch Table:
 CREATE VIEW Branch_info AS SELECT * FROM Branch;
