@@ -6,7 +6,7 @@ CREATE TABLE Locations (Location_id INT PRIMARY KEY,Street_address VARCHAR(200),
 
 CREATE TABLE Managers ( Manager_id INT PRIMARY KEY, Manager_name VARCHAR(100));
 
-Insert values in tables.
+-- Insert values in tables.
 
 1. Find the names (first_name, last_name), the salary of the employees who earn more than the average salary and who work in any of the IT departments:
 SELECT e.First_name, e.Last_name, e.Salary FROM Employees e JOIN Departments d ON e.Department_id = d.Department_id WHERE e.Salary > (SELECT AVG(Salary) FROM Employees) AND d.Department_name LIKE '%IT%';

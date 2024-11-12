@@ -6,6 +6,8 @@ CREATE TABLE Locations (location_id INT PRIMARY KEY,Street_address VARCHAR(100),
 
 CREATE TABLE Manager (Manager_id INT PRIMARY KEY,Manager_name VARCHAR(50));
 
+-- Insert values in tables.
+
 1. Find the names (first_name, last_name) and the salaries of the employees who have a higher salary than the employee whose last_name is "Singh":
 SELECT e.First_name, e.Last_name, e.Salary FROM Employee e WHERE e.Salary > (SELECT Salary FROM Employee WHERE Last_name = 'Singh');
 
