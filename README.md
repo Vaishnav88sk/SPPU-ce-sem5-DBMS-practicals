@@ -1,3 +1,3 @@
 # SPPU SEM5 CE DBMS Practicals
 
-By Neha Kulkarni
+By Vaishnav Kale
