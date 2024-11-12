@@ -63,4 +63,13 @@ EXCEPTION
 END GetManagerName;
 
 
-3. Execute functions.
+3. Execute functions:
+a. Procedure:
+    BEGIN
+        EXEC CalculateEmployeeCommission;
+    END;
+
+b. Function:
+    BEGIN
+        GetManagerName(2);
+    END;
