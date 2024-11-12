@@ -14,7 +14,7 @@ db.Movies_Data.aggregate([{$group: {_id: "$Director", movie_count: { $sum: 1 } }
 db.Movies_Data.aggregate([{$group: {_id: "$Genre",max_collection: { $max: "$BoxOfficeCollection" }}},{$sort: { _id: 1 }}]);
 
 3. Display List of Movies with the Highest BoxOfficeCollection in Each Genre in Ascending Order of BoxOfficeCollection:
-db.Movies_Data.aggregate([{$group: { _id: "$Genre", max_collection: { $max: "$BoxOfficeCollection" }, movie_details: { $push: { Movie_Name: "$Movie_Name", BoxOfficeCollection: "$BoxOfficeCollection" } }}},{$unwind: "$movie_details" },{$match: { "movie_details.BoxOfficeCollection": { $eq: "$max_collection" } } },{$sort: { "movie_details.BoxOfficeCollection": 1 }},{$project: {Genre: "$_id",Movie_Name: "$movie_details.Movie_Name",BoxOfficeCollection: "$movie_details.BoxOfficeCollection"}}]);
+db.Movies_Data.aggregate([{$group: {_id: "$Genre",max_collection: { $max: "$BoxOfficeCollection" }}},{$sort: {max_collection : 1 }}]);
 
 4. Create an Index on the Field Movie_ID:
 db.Movies_Data.createIndex({ Movie_ID: 1 });
