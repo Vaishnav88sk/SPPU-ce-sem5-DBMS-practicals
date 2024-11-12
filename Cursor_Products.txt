@@ -11,8 +11,8 @@ DECLARE
 
     product_record Products%ROWTYPE;
 BEGIN
-    min_price := &min_price;  -- Accept input for minimum price
-    max_price := &max_price;  -- Accept input for maximum price
+    min_price := &min_price;  
+    max_price := &max_price;  
 
     OPEN apparel_cursor(min_price, max_price);
 
