@@ -22,5 +22,5 @@
 2. Using Eclipse:
     a. Create java project.
     b. In the src folder, create a java file and write the code. (Class name of main function should be filename.)
-    c. In the JRE System Library, add the jar file. (or copy and paste it.)
+    c. Right click on src file -> buildPath -> Add the jar file.
     d. Run the java code.
