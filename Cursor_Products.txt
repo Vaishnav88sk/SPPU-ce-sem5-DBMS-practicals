@@ -4,7 +4,7 @@ DECLARE
     max_price DECIMAL(10, 2);
 
     CURSOR apparel_cursor (min_price DECIMAL, max_price DECIMAL) IS
-        SELECT Product_id, Product_Name, Product_Type, Price
+        SELECT *
         FROM Products
         WHERE Product_Type = 'Apparel'
           AND Price BETWEEN min_price AND max_price;
@@ -29,7 +29,7 @@ END;
 Cursor 2. Explicit Cursor to Display Products with Price Greater than 5000:
 DECLARE
     CURSOR expensive_products_cursor IS
-        SELECT Product_id, Product_Name, Product_Type, Price
+        SELECT *
         FROM Products
         WHERE Price > 5000;
 

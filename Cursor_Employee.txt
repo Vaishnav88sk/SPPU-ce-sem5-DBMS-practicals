@@ -1,7 +1,7 @@
 Cursor 1. Explicit Cursor to Display Records of All Employees with Salary Greater Than 50,000:
 DECLARE
     CURSOR emp_cursor IS
-        SELECT Emp_id, Emp_Name, Salary
+        SELECT *
         FROM Employee
         WHERE Salary > 50000;
     
@@ -41,7 +41,7 @@ DECLARE
         WHERE Emp_id = p_emp_id;
     
     v_salary Employee.Salary%TYPE;
-    v_emp_id INT := &emp_id;  -- Accepting user input for Emp_id
+    v_emp_id INT := &emp_id;
     
 BEGIN
     OPEN emp_salary_cursor(v_emp_id);
