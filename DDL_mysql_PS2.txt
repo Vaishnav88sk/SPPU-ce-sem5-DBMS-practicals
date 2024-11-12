@@ -6,7 +6,7 @@ CREATE TABLE Branch (Branch_ID INT PRIMARY KEY,Branch_Name VARCHAR(50),Address V
 CREATE TABLE Account (Account_no INT PRIMARY KEY,Branch_ID INT,CustID INT,open_date DATE,Account_type VARCHAR(20),Balance DECIMAL(10, 2),FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID),FOREIGN KEY (CustID) REFERENCES Customer(CustID));
 
 -- Insert data into tables.
-INSERT INTO Customer (CustID, Name, Cust_Address, Phone_no, Email_ID, Age) VALUES (1, 'Alice', '123 Elm Street, New York', '123-456-7890', 'alice@email.com', 30), (2, 'Bob', '456 Oak Road, Los Angeles', '234-567-8901', 'bob@email.com', 50), (3, 'Charlie', '789 Pine Avenue, Chicago', '345-678-9012', 'charlie@email.com', 25), (4, 'David', '101 Maple Blvd, Boston', '456-789-0123', 'david@email.com', 40), (5, 'Eve', '202 Cedar Lane, Seattle', '567-890-1234', 'eve@email.com', 35);
+INSERT INTO Customer (CustID, Name, Cust_Address, Phone_no, Email_ID, Age) VALUES (1, 'Alice', '123 Elm Street, New York', '123-456-7890', 'alice@email.com', 30), (2, 'Bob', '456 Oak Road, Los Angeles', '234-567-8901', 'bob@email.com', 50), (3, 'Charlie', '789 Pine Avenue, Chicago', '345-678-9012', 'charlie@email.com', 25), (4, 'David', '101 Maple Blvd, Boston', '456-789-0123', 'david@email.com', 40), (103, 'Eve', '202 Cedar Lane, Seattle', '567-890-1234', 'eve@email.com', 35);
 
 INSERT INTO Branch (Branch_ID, Branch_Name, Address) VALUES (1, 'Main Branch', '123 Main St, New York'), (2, 'Downtown Branch', '456 Downtown St, Los Angeles'), (3, 'Uptown Branch', '789 Uptown St, Chicago');
 
