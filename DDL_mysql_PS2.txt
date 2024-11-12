@@ -24,4 +24,4 @@ CREATE INDEX idx_BranchID ON Branch(Branch_ID);
 ALTER TABLE Customer MODIFY COLUMN CustID INT AUTO_INCREMENT;
 
 9. Create a Synonym ‘Cust_info’ for Branch Table:
-CREATE PUBLIC SYNONYM Cust_info FOR Student.Branch;
+CREATE VIEW Cust_info AS SELECT * FROM Branch;
