@@ -22,9 +22,9 @@ CREATE OR REPLACE VIEW Customer_Info AS SELECT c.*, a.date_open FROM Customer c 
 
 6. Create a Sequence on the Branch Table:
 alter table Account drop foreign key Account_ibfk_1;
-Alter table Customer modify CustID int auto_increment;
-alter table Account add constraint account_ibfk_2 foreign key(CustID) references Customer(CustID);
-show table Status like 'Customer';
+Alter table Branch modify Branch_ID int auto_increment;
+alter table Account add constraint account_ibfk_1 foreign key(Branch_ID) references Branch(Branch_ID);
+show table Status like 'Branch';
 
 7. Create a Synonym 'Branch_info' for the Branch Table:
 CREATE VIEW Branch_info AS SELECT * FROM Branch;

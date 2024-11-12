@@ -39,7 +39,9 @@ END;
 
 -- Execution:
 1. Procedure:
+BEGIN
 EXEC Calculate_Interest(p_Account_No => 101, p_Interest_Rate => 5);
+END;
 
 2. Function:
 DECLARE
