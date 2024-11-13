@@ -24,7 +24,7 @@ Mongosh commands:
 
 
 1. List All the Users from Collection Social_Media in a Formatted Manner:
-db.Social_Media.find({}, { _id: 0, User_Name: 1, No_of_Posts: 1 }).forEach(function(user) {print("User: " + user.User_Name + ", Posts: " + user.No_of_Posts);});
+db.Social_Media.find({}, { _id: 0, User_Name: 1, No_of_Posts: 1 }).pretty();
 
 2. Find All Users Having Number of Posts Greater Than 100:
 db.Social_Media.find({ No_of_Posts: { $gt: 100 } }, { _id: 0, User_Name: 1, No_of_Posts: 1 });
