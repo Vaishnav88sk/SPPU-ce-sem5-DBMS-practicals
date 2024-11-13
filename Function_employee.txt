@@ -20,13 +20,13 @@ BEGIN
         v_experience := FLOOR(MONTHS_BETWEEN(SYSDATE, v_doj) / 12);
 
         IF v_salary > 10000 THEN
-            v_commission := v_salary * 0.004; -- 0.4%
+            v_commission := v_salary * 0.004;
         ELSIF v_salary < 10000 AND v_experience > 10 THEN
-            v_commission := v_salary * 0.0035; -- 0.35%
+            v_commission := v_salary * 0.0035;
         ELSIF v_salary < 3000 THEN
-            v_commission := v_salary * 0.0025; -- 0.25%
+            v_commission := v_salary * 0.0025;
         ELSE
-            v_commission := v_salary * 0.0015; -- 0.15%
+            v_commission := v_salary * 0.0015;
         END IF;
 
         UPDATE Employee
