@@ -17,6 +17,7 @@ BEFORE DELETE ON Employee
 FOR EACH ROW
 BEGIN
     IF OLD.designation = 'CEO' THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cannot delete employee with designation CEO';
+        RAISE_APPLICATION_ERROR(-20001, 'Cannot delete employee with designation CEO');
+        -- SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cannot delete employee with designation CEO';
     END IF;
 END;
